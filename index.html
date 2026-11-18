@@ -3,73 +3,513 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Derick R | Portfolio</title>
-<link rel="stylesheet" href="style.css">
+<title>Derick R | Mechanical Engineer</title>
+<meta name="description" content="Portfolio of Derick R — mechanical engineer, maker and project builder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141414; --paper:#fff8ec; --yellow:#ffd23f; --pink:#ff5d8f; --blue:#3a86ff; --green:#06d6a0; --orange:#ff8c42;
+  --b:3px solid var(--ink); --shadow:6px 6px 0 var(--ink); --ease:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none}
+a,button{cursor:none}
+img{display:block;max-width:100%}
+.hand{font-family:Caveat,cursive}
+
+/* dotted paper */
+body::before{content:"";position:fixed;inset:0;z-index:-1;background-image:radial-gradient(rgba(0,0,0,.09) 1.2px,transparent 1.2px);background-size:22px 22px}
+
+/* custom cursor */
+.cursor{position:fixed;top:0;left:0;width:22px;height:22px;border:var(--b);border-radius:50%;pointer-events:none;z-index:999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .2s}
+.cursor.big{width:64px;height:64px;background:rgba(255,210,63,.55)}
+.cursor.drag{width:44px;height:44px;background:var(--pink)}
+@media (pointer:coarse){.cursor{display:none} body,a,button{cursor:auto}}
+
+/* nav */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:6px;padding:8px;background:#fff;border:var(--b);border-radius:999px;box-shadow:4px 4px 0 var(--ink)}
+nav a{color:var(--ink);padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:600;transition:background .2s,transform .3s var(--ease)}
+nav a:hover{background:var(--yellow);transform:rotate(-4deg) scale(1.08)}
+@media (max-width:640px){nav a{padding:6px 10px;font-size:.85rem}}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:120px 5vw 60px;overflow:hidden}
+.hello{display:inline-block;background:var(--green);border:var(--b);border-radius:999px;padding:6px 18px;font-weight:600;box-shadow:4px 4px 0 var(--ink);transform:rotate(-3deg);animation:wobble 3s ease-in-out infinite}
+@keyframes wobble{50%{transform:rotate(3deg)}}
+h1{font-size:clamp(4rem,15vw,12rem);line-height:.9;margin:24px 0 10px;font-weight:800;letter-spacing:-.04em;user-select:none}
+h1 .ch{display:inline-block;transition:transform .5s var(--ease),color .2s}
+h1 .ch:hover{animation:jelly .7s}
+@keyframes jelly{0%{transform:scale(1,1)}30%{transform:scale(1.35,.7) translateY(10px)}50%{transform:scale(.8,1.25) translateY(-30px)}70%{transform:scale(1.1,.9)}100%{transform:scale(1)}}
+.role{font-size:clamp(1.3rem,3.2vw,2.2rem);font-weight:600;max-width:820px;margin:0 auto}
+.role mark{background:var(--yellow);padding:0 .25em;border:var(--b);border-radius:10px;display:inline-block;transform:rotate(-2deg)}
+.role .swap{display:inline-block;min-width:6ch;color:var(--blue);border-bottom:4px dashed var(--blue)}
+.tip{margin-top:28px;font-size:1.6rem;color:#555;transform:rotate(-2deg)}
+.tip::before{content:"↖ ";}
+
+/* stickers (draggable physics) */
+.sticker{position:absolute;z-index:5;width:86px;height:86px;display:grid;place-items:center;font-size:2.6rem;border:var(--b);border-radius:22px;box-shadow:var(--shadow);user-select:none;touch-action:none;will-change:transform}
+.sticker.round{border-radius:50%}
+.sticker svg{width:60%;height:60%}
+.sticker.grab{box-shadow:10px 12px 0 var(--ink)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;font:inherit;font-weight:800;font-size:1.1rem;border:var(--b);border-radius:16px;background:var(--pink);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+.btn.alt{background:#fff}
+.cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+
+/* ribbon */
+.ribbon{background:var(--ink);color:var(--yellow);border-block:var(--b);padding:18px 0;overflow:hidden;transform:rotate(-2deg);margin:40px -20px}
+.ribbon .track{display:flex;gap:40px;width:max-content;font-size:2rem;font-weight:800;animation:roll 22s linear infinite}
+.ribbon span::after{content:"✺";margin-left:40px;color:var(--pink)}
+@keyframes roll{to{transform:translateX(-50%)}}
+
+section{padding:110px 6vw;max-width:1250px;margin:0 auto}
+.title{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;letter-spacing:-.03em;margin:0 0 50px;line-height:1}
+.title small{display:block;font-family:Caveat;font-weight:600;font-size:.45em;color:var(--pink);transform:rotate(-2deg);letter-spacing:0}
+
+/* pop-in */
+.pop{opacity:0;transform:translateY(50px) scale(.9) rotate(var(--r,-3deg));transition:opacity .6s,transform .8s var(--ease);transition-delay:var(--d,0s)}
+.pop.in{opacity:1;transform:rotate(var(--r2,0deg))}
+
+/* about */
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.polaroid{background:#fff;border:var(--b);padding:16px 16px 60px;box-shadow:var(--shadow);--r2:-4deg;position:relative;transition:transform .5s var(--ease)!important}
+.polaroid:hover{transform:rotate(3deg) scale(1.03)!important}
+.polaroid .ph{aspect-ratio:1;background:var(--blue);border:var(--b);display:grid;place-items:center;font-size:6rem;font-weight:800;color:#fff;overflow:hidden}
+.polaroid .ph img{width:100%;height:100%;object-fit:cover}
+.polaroid .ph img+span{display:none}
+.polaroid .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:Caveat;font-size:1.8rem}
+.tape{position:absolute;top:-16px;left:50%;width:110px;height:32px;background:rgba(255,210,63,.85);transform:translateX(-50%) rotate(-4deg);border:2px solid rgba(0,0,0,.15)}
+.about p{font-size:1.3rem;line-height:1.55}
+.facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.fact{border:var(--b);border-radius:999px;padding:10px 18px;font-weight:600;background:#fff;transition:transform .3s var(--ease),background .2s}
+.fact:hover{transform:scale(1.12) rotate(-5deg)}
+.fact:nth-child(1):hover{background:var(--yellow)}.fact:nth-child(2):hover{background:var(--green)}.fact:nth-child(3):hover{background:var(--pink)}.fact:nth-child(4):hover{background:var(--blue);color:#fff}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:34px}
+.flip{perspective:1200px;height:400px}
+.flip:nth-child(1){--r2:-1.5deg}.flip:nth-child(2){--r2:1.5deg}.flip:nth-child(3){--r2:-1deg}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .8s var(--ease);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border:var(--b);border-radius:24px;box-shadow:var(--shadow);backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column}
+.front .art{flex:1;border-bottom:var(--b);display:grid;place-items:center;font-size:6rem;position:relative;overflow:hidden}
+.front .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.front .art .emo{transition:transform .5s var(--ease)}
+.flip:hover .emo{transform:scale(1.25) rotate(12deg)}
+.front .lbl{padding:20px 22px;background:#fff;display:flex;justify-content:space-between;align-items:center}
+.front h3{margin:0;font-size:1.6rem}
+.hint{font-family:Caveat;font-size:1.3rem;color:#666}
+.back{transform:rotateY(180deg);padding:30px;justify-content:space-between}
+.back h3{font-size:1.8rem;margin:0 0 10px}
+.back p{font-size:1.15rem;line-height:1.5;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:#fff;border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:600;font-size:.9rem}
+
+/* gear machine */
+.machine{position:relative;height:200px;margin:10px 0 60px}
+.machine svg{position:absolute;color:var(--ink)}
+.machine .m1{width:180px;left:8%;top:10px;color:var(--yellow)}
+.machine .m2{width:120px;left:calc(8% + 160px);top:0}
+.machine .m3{width:150px;left:calc(8% + 262px);top:70px;color:var(--pink)}
+.machine .m4{width:90px;left:calc(8% + 392px);top:20px;color:var(--blue)}
+.machine svg path{stroke:var(--ink);stroke-width:3}
+.machine .note{position:absolute;right:6%;top:60px;font-size:1.7rem;transform:rotate(-4deg);max-width:280px}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px}
+.skill{border:var(--b);border-radius:22px;padding:24px;background:#fff;box-shadow:var(--shadow);transition:transform .3s var(--ease)!important}
+.skill:hover{transform:translateY(-8px) rotate(-2deg)!important}
+.skill .ic{font-size:2.6rem}
+.skill h4{margin:10px 0 14px;font-size:1.25rem}
+.meter{height:18px;border:var(--b);border-radius:999px;overflow:hidden;background:var(--paper)}
+.meter i{display:block;height:100%;width:0;background:repeating-linear-gradient(-45deg,var(--c),var(--c) 10px,rgba(255,255,255,.4) 10px,rgba(255,255,255,.4) 20px);border-right:var(--b);transition:width 1.4s var(--ease) .3s;animation:stripes 1s linear infinite}
+@keyframes stripes{to{background-position:28px 0}}
+.skill.in .meter i{width:var(--w)}
+
+/* contact */
+.contact{text-align:center}
+.mailbox{display:inline-block;background:var(--yellow);border:var(--b);border-radius:28px;box-shadow:10px 10px 0 var(--ink);padding:50px 40px;max-width:760px;width:100%}
+.mailbox h2{font-size:clamp(2.2rem,6vw,4rem);margin:0 0 10px;line-height:1}
+.mailbox p{font-size:1.2rem;margin:0 0 30px}
+.socials{display:flex;gap:12px;justify-content:center;margin-top:24px}
+.socials a{border:var(--b);border-radius:14px;padding:10px 18px;background:#fff;text-decoration:none;font-weight:600;transition:transform .3s var(--ease)}
+.socials a:hover{transform:rotate(-6deg) scale(1.1)}
+.toast{position:fixed;bottom:30px;left:50%;transform:translate(-50%,150px);background:var(--ink);color:#fff;padding:14px 24px;border-radius:14px;font-weight:600;transition:transform .5s var(--ease);z-index:100}
+.toast.show{transform:translate(-50%,0)}
+.confetti{position:fixed;width:12px;height:12px;pointer-events:none;z-index:200;border:2px solid var(--ink)}
+
+footer{text-align:center;padding:40px;font-family:Caveat;font-size:1.6rem}
+
+@media (max-width:820px){.about{grid-template-columns:1fr}.polaroid{max-width:340px;margin:0 auto}.machine .note{display:none}.sticker{width:64px;height:64px;font-size:2rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pop{opacity:1;transform:none}}
+
+/* ---- content additions ---- */
+.polaroid .ph{background:linear-gradient(160deg,var(--blue),#7bb3ff)}
+.polaroid .ph img{object-position:center 20%}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 6px}
+.stat{border:var(--b);border-radius:18px;padding:14px 12px;box-shadow:4px 4px 0 var(--ink);text-align:center;transition:transform .3s var(--ease)}
+.stat:hover{transform:rotate(-4deg) scale(1.06)}
+.stat b{display:block;font-size:2rem;line-height:1.1}
+.stat span{font-size:.85rem;font-weight:600}
+.front .lbl{gap:10px}
+.front .lbl h3{font-size:1.35rem;line-height:1.15}
+.when{display:block;font-size:.8rem;font-weight:600;color:#666;margin-bottom:2px}
+.back p{font-size:1.02rem}
+.flip{height:420px}
+.road{position:relative;display:grid;gap:26px;padding-left:46px}
+.road::before{content:"";position:absolute;left:14px;top:10px;bottom:10px;width:6px;border-radius:6px;background:repeating-linear-gradient(to bottom,var(--ink) 0 18px,transparent 18px 30px)}
+.stop{position:relative;background:#fff;border:var(--b);border-radius:22px;padding:22px 26px;box-shadow:var(--shadow);transition:transform .35s var(--ease)!important}
+.stop:nth-child(odd){--r2:-.8deg}.stop:nth-child(even){--r2:.8deg}
+.stop:hover{transform:translateX(8px) rotate(0)!important}
+.stop::before{content:"";position:absolute;left:-46px;top:24px;width:26px;height:26px;border-radius:50%;background:var(--c);border:var(--b);box-shadow:3px 3px 0 var(--ink)}
+.stop .date{display:inline-block;background:var(--c);border:2px solid var(--ink);border-radius:999px;padding:2px 12px;font-weight:600;font-size:.85rem}
+.stop h3{margin:10px 0 6px;font-size:1.35rem}
+.stop p{margin:0;font-size:1.05rem;line-height:1.5}
+.stop.with-pic{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center}
+.stop.with-pic img{width:160px;height:160px;object-fit:cover;border:var(--b);border-radius:16px;transform:rotate(-3deg)}
+.sub-title{font-size:1.8rem;margin:60px 0 20px}
+.badges{display:flex;flex-wrap:wrap;gap:14px}
+.badge{border:var(--b);border-radius:14px;padding:12px 18px;font-weight:600;background:var(--yellow);box-shadow:4px 4px 0 var(--ink);transform:rotate(var(--r));transition:transform .3s var(--ease)}
+.badge.soft{background:#fff}
+.badge:hover{transform:rotate(0) scale(1.1)}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}.stop.with-pic{grid-template-columns:1fr}.stop.with-pic img{width:100%;height:200px}}
+</style>
 </head>
 <body>
+<div class="cursor"></div>
 
-<header>
-  <h1>Derick R</h1>
-  <p>Mechanical Engineer | Innovator | Project Builder</p>
-</header>
+<svg width="0" height="0" style="position:absolute"><symbol id="gear" viewBox="0 0 100 100"><path d="M43 4h14l2 12a35 35 0 0 1 9 4l10-7 10 10-7 10a35 35 0 0 1 4 9l12 2v14l-12 2a35 35 0 0 1-4 9l7 10-10 10-10-7a35 35 0 0 1-9 4l-2 12H43l-2-12a35 35 0 0 1-9-4l-10 7-10-10 7-10a35 35 0 0 1-4-9L3 57V43l12-2a35 35 0 0 1 4-9l-7-10 10-10 10 7a35 35 0 0 1 9-4zM50 34a16 16 0 1 0 0 32 16 16 0 1 0 0-32z" fill="currentColor" fill-rule="evenodd"/></symbol></svg>
 
 <nav>
-  <a href="#about">About</a>
-  <a href="#projects">Projects</a>
-  <a href="#skills">Skills</a>
-  <a href="#contact">Contact</a>
+  <a href="#about">About</a><a href="#projects">Builds</a><a href="#journey">Journey</a><a href="#skills">Skills</a><a href="#contact">Say hi</a>
 </nav>
 
+<header class="hero" id="home">
+  <div class="sticker" style="background:var(--yellow)" data-x="10" data-y="22">🔧</div>
+  <div class="sticker round" style="background:var(--pink)" data-x="82" data-y="18"><svg viewBox="0 0 100 100"><use href="#gear"/></svg></div>
+  <div class="sticker" style="background:var(--green)" data-x="14" data-y="70">🔋</div>
+  <div class="sticker round" style="background:var(--blue)" data-x="86" data-y="66">🏎️</div>
+  <div class="sticker" style="background:var(--orange)" data-x="70" data-y="84">🔩</div>
+  <div class="sticker" style="background:#fff" data-x="28" data-y="88">✈️</div>
+
+  <div>
+    <span class="hello">👋 Hey there! I'm</span>
+    <h1 id="name">Derick R.</h1>
+    <p class="role">An <mark>automobile engineer</mark> who loves to <span class="swap" id="swap">design</span> things that move.</p>
+    <div class="cta">
+      <a href="#projects" class="btn">See my builds ↓</a>
+      <a href="resume.pdf" class="btn alt" target="_blank" rel="noopener">Grab my CV</a>
+    </div>
+    <p class="tip hand">psst… drag &amp; throw the stickers!</p>
+  </div>
+</header>
+
+<div class="ribbon"><div class="track">
+  <span>DESIGN</span><span>SIMULATE</span><span>FABRICATE</span><span>TEST</span><span>OPTIMISE</span><span>REPEAT</span>
+  <span>DESIGN</span><span>SIMULATE</span><span>FABRICATE</span><span>TEST</span><span>OPTIMISE</span><span>REPEAT</span>
+</div></div>
+
 <section id="about">
-  <h2>About Me</h2>
-  <p>I’m a mechanical engineering student passionate about manufacturing, automation, and innovative engineering projects.</p>
+  <h2 class="title pop"><small>a little about me</small>Nice to meet you!</h2>
+  <div class="about">
+    <div class="polaroid pop">
+      <div class="tape"></div>
+      <div class="ph"><img src="images/profile.png" alt="Portrait of Derick R" onerror="this.remove()"><span>DR</span></div>
+      <div class="cap">that's me :)</div>
+    </div>
+    <div>
+      <p class="pop">I'm an <b>Automobile Engineering</b> student at <b>CHRIST (Deemed to be University), Bengaluru</b>, doing Honours in <b>Digital Manufacturing</b>. I love advanced manufacturing, lightweight structures and high-performance engineering systems.</p>
+      <p class="pop">I want to build a career across the <b>automotive, mechanical and aeronautical</b> industries, working on cleaner, smarter mobility and aerospace tech. Right now I'm an apprentice trainee at <b>Novo Nordisk Engineering</b>.</p>
+      <div class="stats pop">
+        <div class="stat" style="background:var(--yellow)"><b data-to="9.63" data-dec="2">0</b><span>CGPA</span></div>
+        <div class="stat" style="background:var(--green)"><b data-to="3">0</b><span>Industry roles</span></div>
+        <div class="stat" style="background:var(--pink)"><b data-to="1">0</b><span>Int'l conference</span></div>
+        <div class="stat" style="background:var(--blue);color:#fff"><b data-to="4">0</b><span>Certifications</span></div>
+      </div>
+      <div class="facts pop">
+        <span class="fact">📍 Vellore, Tamil Nadu</span><span class="fact">🏅 Merit Scholar 2024–25</span><span class="fact">🗣️ English · Tamil</span><span class="fact">🌍 Millennium Fellow</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="projects">
-  <h2>Projects</h2>
-  <div class="grid">
+  <h2 class="title pop"><small>tap a card to flip it</small>Stuff I've built</h2>
+  <div class="machine pop" aria-hidden="true">
+    <svg class="m1" viewBox="0 0 100 100"><use href="#gear"/></svg>
+    <svg class="m2" viewBox="0 0 100 100"><use href="#gear"/></svg>
+    <svg class="m3" viewBox="0 0 100 100"><use href="#gear"/></svg>
+    <svg class="m4" viewBox="0 0 100 100"><use href="#gear"/></svg>
+    <p class="note hand">← scroll faster, they spin faster!</p>
+  </div>
+  <div class="cards">
 
-    <div class="card">
-      <img src="images/project1.jpg">
-      <h3>Racing Simulator</h3>
-      <p>Custom-built steel frame sim with pedals, seat and gaming system.</p>
-    </div>
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:var(--green)"><span class="emo">⚡</span><img src="images/regen-suspension.jpg" alt="Regenerative suspension prototype" onerror="this.remove()"></div>
+        <div class="lbl"><div><span class="when">Final-year project · 2026–27</span><h3>Regenerative Suspension</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:var(--green)"><div><h3>Regenerative Suspension</h3><p>A low-cost prototype that turns suspension bounce into electricity. A rack and pinion converts vertical travel into rotation, a gear train steps up the speed, and PMDC generators charge a 12 V battery through a buck-boost converter.</p></div>
+        <div class="chips"><span>Energy harvesting</span><span>Fusion 360</span><span>Fabrication</span><span>EV</span></div></div>
+    </div></div>
 
-    <div class="card">
-      <img src="images/project2.jpg">
-      <h3>Smart Shredder</h3>
-      <p>Waste shredding + compression system for recycling.</p>
-    </div>
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:var(--blue)"><span class="emo">🏥</span><img src="images/patient-transfer.jpg" alt="3D-printed patient transfer chair model" onerror="this.remove()"></div>
+        <div class="lbl"><div><span class="when">Seraphean Health · 2026</span><h3>Smart Patient Transfer System</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:var(--blue);color:#fff"><div><h3>Smart Patient Transfer System</h3><p>A multi-functional patient shifting system for palliative care that moves patients safely between bed and wheelchair, with less effort for caregivers. I worked on the concept, mechanical design and material selection. It's now heading to IP filing and manufacturing.</p></div>
+        <div class="chips"><span style="color:var(--ink)">Medical device</span><span style="color:var(--ink)">SolidWorks</span><span style="color:var(--ink)">3D printing</span></div></div>
+    </div></div>
 
-    <div class="card">
-      <img src="images/project3.jpg">
-      <h3>Electric Wheelchair</h3>
-      <p>All-terrain tracked wheelchair design.</p>
-    </div>
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:var(--yellow)"><span class="emo">🏎️</span></div>
+        <div class="lbl"><div><span class="when">Jul – Oct 2025</span><h3>Racing Simulator</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:var(--yellow)"><div><h3>Racing Simulator</h3><p>A rigid square-section carbon-steel rig with a recycled car seat on sliding rails, a PXN V99 wheel, 3 pedals and a manual shifter. Tuned and tested in Assetto Corsa.</p></div>
+        <div class="chips"><span>Welding</span><span>Ergonomics</span><span>Fabrication</span></div></div>
+    </div></div>
+
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:var(--pink)"><span class="emo">🚗</span></div>
+        <div class="lbl"><div><span class="when">Jan – May 2026</span><h3>SAE Supra</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:var(--pink)"><div><h3>SAE Supra</h3><p>Designed mechanical components and assemblies for a Supra-based vehicle in SolidWorks and Fusion 360, and supported powertrain integration, chassis setup and diagnostics.</p></div>
+        <div class="chips"><span>Powertrain</span><span>Chassis</span><span>SolidWorks</span></div></div>
+    </div></div>
+
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:var(--orange)"><span class="emo">💧</span></div>
+        <div class="lbl"><div><span class="when">Jun – Oct 2025</span><h3>Water Dispenser Optimisation</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:var(--orange)"><div><h3>Water Dispenser Optimisation</h3><p>A manual water dispenser that uses a four-bar linkage to turn rotation into piston strokes. Modelled in Fusion 360, with stress and safety analysis to cut material use.</p></div>
+        <div class="chips"><span>Four-bar linkage</span><span>FEA</span><span>Fusion 360</span></div></div>
+    </div></div>
+
+    <div class="flip pop"><div class="flip-in">
+      <div class="face front"><div class="art" style="background:#c9b8ff"><span class="emo">🔋</span></div>
+        <div class="lbl"><div><span class="when">ICMAT Singapore · Jul 2025</span><h3>Sustainable Li-ion Batteries</h3></div><span class="hint">flip →</span></div></div>
+      <div class="face back" style="background:#c9b8ff"><div><h3>Sustainable Li-ion Batteries</h3><p>Presented research at an international conference in Singapore on cobalt-free, high-performance cathode materials made by reverse co-precipitation.</p></div>
+        <div class="chips"><span>Research</span><span>Materials</span><span>Sustainability</span></div></div>
+    </div></div>
 
   </div>
 </section>
 
+<section id="journey">
+  <h2 class="title pop"><small>where I've been</small>My journey so far</h2>
+  <div class="road">
+    <div class="stop pop" style="--c:var(--blue)">
+      <span class="date">Apr 2026 – now</span>
+      <h3>Apprentice Trainee · Novo Nordisk Engineering</h3>
+      <p>Training plus a pilot project in mechanical systems, piping and engineering model transformation. Rotations across Process, Mechanical and E&amp;I, including GMP-compliant process vessel design.</p>
+    </div>
+    <div class="stop pop" style="--c:var(--green)">
+      <span class="date">Mar – Sep 2026</span>
+      <h3>Design Intern · Seraphean Health</h3>
+      <p>Designed a smart patient transfer system, from concept and CAD to material selection and prototype planning.</p>
+    </div>
+    <div class="stop pop" style="--c:var(--pink)">
+      <span class="date">Jul 2025</span>
+      <h3>Paper presenter · ICMAT, Singapore</h3>
+      <p>"Advancing Sustainable Li-ion Batteries": cobalt-free cathode materials for greener energy storage.</p>
+    </div>
+    <div class="stop pop with-pic" style="--c:var(--orange)">
+      <img src="images/nobel-alloy.jpg" alt="Hydraulic press at Nobel Alloy Components" onerror="this.remove()">
+      <div>
+        <span class="date">May 2025</span>
+        <h3>Production Intern · Nobel Alloy Components</h3>
+        <p>Applied Lean Manufacturing and Six Sigma in aluminium die casting: layout mapping, workflow optimisation and SOPs for racks, tool boards and storage.</p>
+      </div>
+    </div>
+    <div class="stop pop" style="--c:var(--yellow)">
+      <span class="date">Jul – Dec 2024</span>
+      <h3>Team Lead · Project GYAAN (Millennium Fellowship)</h3>
+      <p>Led a team of 10 running soft-skills workshops on public speaking, communication and resilience for students in Grades 9–12.</p>
+    </div>
+    <div class="stop pop" style="--c:#c9b8ff">
+      <span class="date">2023 – now</span>
+      <h3>B.Tech Automobile Engineering · CHRIST University</h3>
+      <p>Honours in Digital Manufacturing · CGPA 9.63 · Meritorious Scholarship 2024–25.</p>
+    </div>
+    <div class="stop pop" style="--c:#fff">
+      <span class="date">2022 – 2023</span>
+      <h3>Class 12 (PCMB) · Montfort Anglo Indian</h3>
+      <p>Scored 82%.</p>
+    </div>
+  </div>
+</section>
+
 <section id="skills">
-  <h2>Skills</h2>
-  <ul>
-    <li>CAD Design (SolidWorks, Fusion)</li>
-    <li>Manufacturing Processes</li>
-    <li>IoT & Automation</li>
-    <li>Python, CNC, G-code</li>
-  </ul>
+  <h2 class="title pop"><small>my toolbox</small>Things I'm good at</h2>
+  <div class="skills">
+    <div class="skill pop" style="--c:var(--yellow);--w:90%"><div class="ic">📐</div><h4>SolidWorks &amp; Fusion 360</h4><div class="meter"><i></i></div></div>
+    <div class="skill pop" style="--c:var(--pink);--w:75%"><div class="ic">🌀</div><h4>Ansys Fluent (CFD)</h4><div class="meter"><i></i></div></div>
+    <div class="skill pop" style="--c:var(--green);--w:70%"><div class="ic">🧪</div><h4>ROHR2 Piping Analysis</h4><div class="meter"><i></i></div></div>
+    <div class="skill pop" style="--c:var(--blue);--w:85%"><div class="ic">🏭</div><h4>Lean Mfg &amp; Six Sigma</h4><div class="meter"><i></i></div></div>
+    <div class="skill pop" style="--c:var(--orange);--w:85%"><div class="ic">🔥</div><h4>Fabrication &amp; Welding</h4><div class="meter"><i></i></div></div>
+    <div class="skill pop" style="--c:#c9b8ff;--w:80%"><div class="ic">🎨</div><h4>Graphic Design</h4><div class="meter"><i></i></div></div>
+  </div>
+  <h3 class="sub-title pop">Certifications &amp; soft skills</h3>
+  <div class="badges pop">
+    <span class="badge" style="--r:-4deg">📡 Applied Industrial IoT</span>
+    <span class="badge" style="--r:3deg">🚁 Drone Technology</span>
+    <span class="badge" style="--r:-2deg">✈️ Aerodynamics</span>
+    <span class="badge" style="--r:4deg">📊 Microsoft Excel</span>
+    <span class="badge soft" style="--r:-3deg">🎤 Communication</span>
+    <span class="badge soft" style="--r:2deg">🧭 Leadership</span>
+    <span class="badge soft" style="--r:-4deg">🤝 Teamwork</span>
+  </div>
 </section>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Email: derickraju20@gmail.com</p>
-  <p>LinkedIn: linkedin.com/in/yourname</p>
+<section id="contact" class="contact">
+  <div class="mailbox pop">
+    <h2>Let's build something! 🚀</h2>
+    <p>Internships, collabs or just nerding out about cars and machines. I'm in.</p>
+    <button class="btn" id="copy" style="font-size:1.2rem">📋 Copy my email</button>
+    <div class="socials">
+      <a href="mailto:derickraju20@gmail.com">✉️ Email</a>
+      <a href="https://www.linkedin.com/in/derick-raju" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a href="https://github.com/derickr-spec" target="_blank" rel="noopener">🐙 GitHub</a>
+    </div>
+  </div>
 </section>
 
-<footer>
-  <p>© 2026 Derick R</p>
-</footer>
+<footer>made with ⚙️ + ☕ by Derick R</footer>
+<div class="toast" id="toast">Email copied! 🎉</div>
 
-<script src="script.js"></script>
+<script>
+const fine = matchMedia("(pointer:fine)").matches;
+const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
+const COLORS = ["#ffd23f","#ff5d8f","#3a86ff","#06d6a0","#ff8c42"];
+
+/* split name into letters */
+const h1 = document.getElementById("name");
+h1.innerHTML = [...h1.textContent].map(c => c === " " ? " " : `<span class="ch">${c}</span>`).join("");
+h1.querySelectorAll(".ch").forEach(ch => {
+  ch.addEventListener("mouseenter", () => { ch.style.color = COLORS[Math.random()*COLORS.length|0]; });
+  ch.addEventListener("animationend", () => ch.style.animation = "");
+  ch.addEventListener("click", () => { ch.style.animation = "none"; ch.offsetHeight; ch.style.animation = "jelly .7s"; });
+});
+
+/* word swapper */
+const words = ["design","build","weld","simulate","prototype","optimise"];
+let wi = 0; const sw = document.getElementById("swap");
+setInterval(() => {
+  wi = (wi+1) % words.length;
+  sw.animate([{transform:"translateY(0) rotate(0)",opacity:1},{transform:"translateY(-20px) rotate(-8deg)",opacity:0}],{duration:200}).onfinish = () => {
+    sw.textContent = words[wi];
+    sw.animate([{transform:"translateY(20px) rotate(8deg)",opacity:0},{transform:"none",opacity:1}],{duration:350,easing:"cubic-bezier(.34,1.56,.64,1)"});
+  };
+}, 1800);
+
+/* cursor */
+const cur = document.querySelector(".cursor");
+if (fine) {
+  addEventListener("pointermove", e => { cur.style.left = e.clientX+"px"; cur.style.top = e.clientY+"px"; });
+  document.querySelectorAll("a,button,.flip,.ch,.fact,.stat,.stop,.badge").forEach(el => {
+    el.addEventListener("mouseenter", () => cur.classList.add("big"));
+    el.addEventListener("mouseleave", () => cur.classList.remove("big"));
+  });
+}
+
+/* sticker physics: drag, throw, bounce */
+const hero = document.querySelector(".hero");
+const stickers = [...document.querySelectorAll(".sticker")].map(el => {
+  const r = hero.getBoundingClientRect();
+  return { el, x: r.width*el.dataset.x/100 - 43, y: r.height*el.dataset.y/100 - 43, vx:(Math.random()-.5)*2, vy:(Math.random()-.5)*2, rot: Math.random()*30-15, vr:0, drag:false };
+});
+let drag = null, last = {x:0,y:0,t:0};
+stickers.forEach(s => {
+  s.el.addEventListener("pointerdown", e => {
+    drag = s; s.drag = true; s.el.classList.add("grab"); cur.classList.add("drag");
+    s.ox = e.clientX - s.x; s.oy = e.clientY - s.y; last = {x:e.clientX,y:e.clientY,t:performance.now()};
+    s.el.setPointerCapture(e.pointerId); s.el.style.zIndex = 10;
+  });
+  s.el.addEventListener("pointermove", e => {
+    if (drag !== s) return;
+    const now = performance.now(), dt = Math.max(now-last.t,1);
+    s.vx = (e.clientX-last.x)/dt*16; s.vy = (e.clientY-last.y)/dt*16;
+    s.x = e.clientX - s.ox; s.y = e.clientY - s.oy; s.vr = s.vx*.5;
+    last = {x:e.clientX,y:e.clientY,t:now};
+  });
+  const up = () => { if (drag !== s) return; drag = null; s.drag = false; s.el.classList.remove("grab"); cur.classList.remove("drag"); s.el.style.zIndex = 5; };
+  s.el.addEventListener("pointerup", up); s.el.addEventListener("pointercancel", up);
+  s.el.addEventListener("dblclick", () => { s.vr = 40; });
+});
+function physics(){
+  const W = hero.clientWidth, H = hero.clientHeight;
+  stickers.forEach(s => {
+    const size = s.el.offsetWidth;
+    if (!s.drag) {
+      s.x += s.vx; s.y += s.vy;
+      s.vx *= .985; s.vy *= .985; s.vr *= .96;
+      if (s.x < 0) { s.x = 0; s.vx = Math.abs(s.vx)*.8; s.vr += s.vy; }
+      if (s.x > W-size) { s.x = W-size; s.vx = -Math.abs(s.vx)*.8; s.vr -= s.vy; }
+      if (s.y < 0) { s.y = 0; s.vy = Math.abs(s.vy)*.8; }
+      if (s.y > H-size) { s.y = H-size; s.vy = -Math.abs(s.vy)*.8; }
+      // gentle float
+      s.vy += Math.sin(performance.now()/900 + s.x)*.012;
+    }
+    s.rot += s.vr*.2;
+    s.el.style.transform = `translate(${s.x}px,${s.y}px) rotate(${s.rot}deg)`;
+  });
+  requestAnimationFrame(physics);
+}
+stickers.forEach(s => { s.el.style.left = 0; s.el.style.top = 0; });
+physics();
+
+/* flip cards */
+document.querySelectorAll(".flip").forEach(f => f.addEventListener("click", () => f.classList.toggle("flipped")));
+
+/* pop-in reveals */
+document.querySelectorAll(".cards,.skills,.facts,.road,.badges,.stats").forEach(g => [...g.children].forEach((c,i) => c.style.setProperty("--d", i*.12+"s")));
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.15});
+document.querySelectorAll(".pop").forEach(el => io.observe(el));
+
+/* gear machine: speed follows scroll velocity */
+const gears = [...document.querySelectorAll(".machine svg")];
+const ratio = [1,-1.5,1.2,-2];
+let angle = 0, speed = .4, lastY = scrollY;
+(function spin(){
+  const dy = Math.abs(scrollY - lastY); lastY = scrollY;
+  speed += (0.4 + dy*.6 - speed) * .08;
+  angle += speed;
+  gears.forEach((g,i) => g.style.transform = `rotate(${angle*ratio[i]}deg)`);
+  requestAnimationFrame(spin);
+})();
+
+/* copy email + confetti */
+function confetti(x, y){
+  if (reduce) return;
+  for (let i=0;i<60;i++){
+    const c = document.createElement("div"); c.className = "confetti";
+    c.style.background = COLORS[i%COLORS.length]; c.style.left = x+"px"; c.style.top = y+"px";
+    if (i%3===0) c.style.borderRadius = "50%";
+    document.body.appendChild(c);
+    const a = Math.random()*Math.PI*2, v = 120 + Math.random()*260;
+    c.animate([
+      {transform:"translate(0,0) rotate(0)",opacity:1},
+      {transform:`translate(${Math.cos(a)*v}px,${Math.sin(a)*v + 300}px) rotate(${Math.random()*720}deg)`,opacity:0}
+    ],{duration:1200+Math.random()*600,easing:"cubic-bezier(.2,.6,.4,1)"}).onfinish = () => c.remove();
+  }
+}
+document.getElementById("copy").addEventListener("click", e => {
+  navigator.clipboard?.writeText("derickraju20@gmail.com");
+  const r = e.currentTarget.getBoundingClientRect();
+  confetti(r.left + r.width/2, r.top + r.height/2);
+  const t = document.getElementById("toast"); t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+});
+
+/* stat counters */
+const statIO = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; statIO.unobserve(e.target);
+  e.target.querySelectorAll("b[data-to]").forEach(el => {
+    const to = +el.dataset.to, dec = +(el.dataset.dec || 0), t0 = performance.now(), dur = reduce ? 0 : 1400;
+    (function tick(now){ const p = dur ? Math.min((now - t0) / dur, 1) : 1; el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(dec); if (p < 1) requestAnimationFrame(tick); })(t0);
+  });
+}), {threshold:.4});
+document.querySelectorAll(".stats").forEach(s => statIO.observe(s));
+</script>
 </body>
 </html>
